@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
-using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApplication2.Models;
 
@@ -29,35 +28,10 @@ namespace WebApplication2.Controllers
             return Ok(customers);
         }
 
-        [EnableQuery]
-        public ActionResult<Customer> Get([FromRoute] int key)
+        public ActionResult Patch([FromBody] DeltaSet<Customer> customers)
         {
-            var item = customers.SingleOrDefault(d => d.Id.Equals(key));
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
-/*        public IActionResult Patch([FromBody] Delta<Customer> customer)
-        {
-            var original = customers[0];
-
-            customer.Patch(original);
-
-            return Ok(original);
-        }*/
-
-        public IActionResult Patch(DeltaSet<Customer> customers)
-        {
-   /*         var original = customers[0];
-
-            customer.Patch(original);*/
-
-            return Ok(customers);
+            // loop through the deltaset
+            return Ok();
         }
     }
 }
